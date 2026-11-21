@@ -84,9 +84,10 @@ Course: CM-501 · Pages tested: `menu.html`, `contact.html` · Target: WCAG 2.2 
 | WAVE contrast errors | menu.html | 38 | | (same screenshot) |
 | WAVE alerts | menu.html | 5 | | (same screenshot) |
 | WAVE AIM score | menu.html | 3.6 | | (same screenshot) |
-| WAVE errors | contact.html | | | `screenshots/wave-contact-before.png` / `…-after.png` |
-| WAVE contrast errors | contact.html | | | (same screenshot) |
-| WAVE alerts | contact.html | | | (same screenshot) |
+| WAVE errors | contact.html | 9 | | `screenshots/wave-contact-before.png` / after: |
+| WAVE contrast errors | contact.html | 3 | | (same screenshot) |
+| WAVE alerts | contact.html | 4 | | (same screenshot) |
+| WAVE AIM score | contact.html | 5.4 | | (same screenshot) |
 
 > For the *before* column, check out the first commit in a second folder and run the
 > tools against it locally (WAVE has a browser extension that works on `file://` and
