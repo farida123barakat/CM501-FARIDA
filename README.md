@@ -13,11 +13,10 @@ One folder per assessment, plus my lab work.
 
 ## EPA 1 Part B · Profile site
 
-Hand-written HTML and CSS, no framework.
+Hand-written HTML, no framework.
 
 - `index.html`: who I am, and websites I love and hate
 - `about.html`: my story, studies and hobbies
-- `style.css`: shared styles for both pages
 
 Live: https://farida123barakat.github.io/CM501-FARIDA/epa1-profile-site/
 
