@@ -1,114 +1,185 @@
-# Website Delivery Report: deutsches-museum.de
+# EPA 1 Part A · Delivery Report: Deutsches Museum
 
-**CM-501 · EPA 1 · Part A** · Farida Barakat · 17 November 2026
+Author: Farida Wael Barakat · Site analysed: https://www.deutsches-museum.de/ (home page)
+Tools: Chrome DevTools (Network, Elements, Console, Coverage, Lighthouse) in Chrome Incognito · Measured: 21 Nov 2026
 
-**Site:** <https://www.deutsches-museum.de/> (home page, public, no login)
+DevTools shows sizes in **kB** (1 kB = 1,000 bytes). Lighthouse uses **KiB** (1 KiB = 1,024 bytes).
 
-**Tools:** Lighthouse 13.6.0 through PageSpeed Insights (mobile: Moto G Power on **Slow 4G**; desktop: fast connection), plus the browser's own **Performance API**, run live on the page the same way you'd run it in the DevTools console. Unused-code numbers come from Lighthouse's coverage audits. All screenshots are in [`evidence/`](evidence/). Sizes are in KiB (1 KiB = 1,024 bytes).
+## A1. Page totals: normal vs. Slow 4G
 
----
-
-## A1 · Page totals: normal vs. Slow 4G
-
-| First visit (empty cache) | Desktop, fast connection | Mobile, Slow 4G | Change |
+| Measure | No throttling | Slow 4G | Change |
 |---|---|---|---|
-| Page weight (initial load) | 1,973 KiB | 1,973 KiB | same bytes |
-| First Contentful Paint | 0.4 s | **2.6 s** | 6.5× slower |
-| Largest Contentful Paint | 0.9 s | **2.6 s** | 2.9× slower |
-| Speed Index | 0.8 s | **4.7 s** | 5.9× slower |
-| Total Blocking Time | 20 ms | 240 ms | slower CPU too |
+| Requests | 42 | 42 | same |
+| Transferred | 4.1 MB | 3.3 MB | about the same |
+| Resources (unpacked) | 5.4 MB | 4.6 MB | about the same |
+| DOMContentLoaded | 632 ms | **4.01 s** | **6.3× slower** |
+| Load | 1.24 s | **11.80 s** | **9.5× slower** |
+| Finish | 1.72 s | **21.13 s** | **12× slower** |
 
-On a repeat visit the browser already has most of the page cached. Live measurements show **21 requests**, 13 of them served straight from the cache. Only **25.5 KiB** travelled over the network, even though the page actually uses 3,146.7 KiB of decoded resources. DOMContentLoaded landed at 661 ms, Load at 737 ms.
+Repeat visit (cache **on**): 39 requests · only **31.6 kB transferred** of 4,553 kB resources · Load 715 ms.
 
-The bytes don't change between normal and Slow 4G — only the connection does. But that's enough to make the first paint more than six times slower. The upside is that caching is doing its job well: a returning visitor downloads roughly **1% of what a first-time visitor does**.
+Evidence: `a1-normal.png`, `a1-slow4g.png`, `a1-repeat-visit.png` (Disable cache on for the first two).
 
-<img src="evidence/a1-lighthouse-desktop-metrics.jpg" width="32%"> <img src="evidence/a1-lighthouse-mobile-slow4g-metrics.jpg" width="32%"> <img src="evidence/a1-repeat-visit-cache.png" width="33%">
+**Explanation:** The page sends the **same files** on both connections. Only the network changes.
+On Slow 4G a visitor waits about **12 s** for the page to load and **21 s** until the last request ends.
+Transferred is a bit lower on Slow 4G because the video streams in pieces (status `206`), and in that time
+the browser did not fetch every piece. Caching works well: a returning visitor downloads under 1% of the page.
 
-## A2 · The three largest resources (initial load)
+## A2. The three largest resources
 
-| # | File | Type | Transfer size | Role |
-|---|---|---|---|---|
-| 1 | `Museumsinsel_Chemie_Versuch.mp4` | video | **1,516.6 KiB** | hero "cinemagraph", autoplays, 3.3 s loop |
-| 2 | `bundle.1793289553.js` | script | 164.2 KiB | main JavaScript bundle |
-| 3 | `bundle.1793289553.css` | stylesheet | 69.4 KiB | all site CSS in one file |
-
-That one video is **77% of the entire first load** (1,516.6 of 1,973 KiB), and it downloads on mobile too, decoration included. Scroll down and a 1,456 KiB PNG joins the list as the second-largest file on the page (see A3).
-
-<img src="evidence/a2-largest-resources-mobile.jpg" width="40%">
-
-## A3 · Images
-
-Once you scroll through the whole page, **20 content images** have loaded: **4,583 KiB** in total, 16 JPG and 4 PNG. Not a single WebP or AVIF anywhere.
-
-A few things stand out:
-
-- **What's working:** the images are **lazy-loaded** through `data-src`, so nothing below the fold loads up front. That's exactly why A1 only shows 1,973 KiB.
-- **The wrong format:** `Ausstellung_Astronomie_Hornantenne….png` is a photograph saved as PNG — 1,456 KiB for one image. I re-encoded it right in the browser to check: as WebP it drops to **124.7 KiB (−91%)** at the same pixel size, or **80.3 KiB (−94%)** at twice the size it's actually shown at.
-- **Oversized for their slot:** that same PNG is 1502×998 px but only ever shown at 534×355 px — **7.9× more pixels than needed**. Three JPGs are 1882×1059 px shown at 554×312 px (**11.5×**).
-- **No dimensions set:** none of the `<img>` elements have `width` and `height` attributes, which Lighthouse flags. That's part of why the desktop layout shift (CLS) came in at 0.052 instead of 0.
-
-<img src="evidence/a3-png-photo-on-page.jpg" width="24%"> <img src="evidence/a3-images-sizes.png" width="37%"> <img src="evidence/a3-webp-conversion-test.png" width="37%">
-
-## A4 · Third parties
-
-**None.** Before answering the cookie banner, and after clicking **Ablehnen** (reject) and scrolling the whole page, the only host contacted was `www.deutsches-museum.de` — 42 requests, all first-party. Lighthouse's own "3rd parties" audit agrees. YouTube, Instagram, Facebook and LinkedIn only show up as plain links, never as embeds, so nothing actually loads from them.
-
-That's good news twice over: for **privacy**, since no data leaves the site for another company before consent is given (which is what GDPR asks for), and for **speed**, since there's no extra DNS lookup, TLS handshake or third-party script slowing things down. One gap worth naming: I didn't test what happens after clicking **Zustimmen** (accept) — the banner mentions analytics, so something probably loads once you agree to it.
-
-<img src="evidence/a4-third-parties-live.png" width="49%"> <img src="evidence/a4-third-parties-lighthouse.jpg" width="30%">
-
-## A5 · Render-blocking and unused code
-
-Two stylesheets sit in `<head>` and have to finish loading before anything can paint: `bundle….css` (69.4 KiB, 1,050 ms on Slow 4G) and `leaflet….css` (3.6 KiB, 150 ms). Lighthouse estimates fixing this would save **750 ms**.
-
-A lot of what does load never gets used:
-
-| File | Transfer | Unused | Share |
+| # | File | Type | Size (transferred) |
 |---|---|---|---|
-| `bundle….css` | 68.9 KiB | 58.4 KiB | **85%** |
-| `bundle….js` | 163.7 KiB | 104.5 KiB | 64% |
-| `leaflet.min….js` (map library) | 48.1 KiB | 40.1 KiB | **83%** |
-| **All JavaScript** | 211.7 KiB | 144.6 KiB | **68%** |
+| 1 | `Museumsinsel_Chemie_Versuch.mp4` | video | **about 2,147 kB** (3 parts: 1,475 + 606 + 65.5 kB) |
+| 2 | `csm_kispi_16_4bba1014d8.jpg` | image | 236 kB |
+| 3 | `csm_Aktionstag_e6be388478.jpg` | image | 190 kB |
 
-The **Leaflet map library** loads on the home page even though no map is visible when it arrives. Its script sits in `<body>` without `defer`, so it also blocks HTML parsing along the way. On top of that, Lighthouse flags 37 KiB of **legacy JavaScript** — polyfills for browsers most visitors probably aren't using — and WOFF fonts with no `font-display` set, costing about 130 ms.
+Next largest: `bundle.1794932180.js` 168 kB, `bundle.1794932180.css` 71.1 kB.
 
-CSS blocking the first paint isn't automatically a bug — without it, visitors would briefly see unstyled content. The fix isn't to make it load async; it's to **inline the small amount of critical CSS** needed for the first screen and load the rest afterwards, and to split that one big bundle by page type instead of shipping all of it everywhere.
+Evidence: `a2-largest.png` (sorted by Size, 3.9 MB transferred in that load).
 
-<img src="evidence/a5-render-blocking.jpg" width="32%"> <img src="evidence/a5-unused-js.jpg" width="32%"> <img src="evidence/a5-unused-css.jpg" width="32%">
+**Explanation:** The hero video appears **three times**, but it is one file. Status `206 Partial Content`
+means the browser downloads it **in pieces** (range requests). Together it is about **55%** of the whole load.
+It is a short background loop, so it adds a lot of weight for decoration.
 
-## A6 · Lighthouse (mobile)
+## A3. Images
 
-**Performance 86** · Accessibility 91 · Best Practices 100 · SEO 92. Metrics: FCP 2.6 s · LCP 2.6 s · TBT 240 ms · CLS 0 · SI 4.7 s.
+| Measure | Value |
+|---|---|
+| Images on first load | **8** (7 JPEG + 1 SVG logo) |
+| Image bytes | **958 kB** of 3,898 kB transferred (about 25%) |
+| Modern formats (WebP / AVIF) | **none** |
+| Logo | `dm-logo.svg`, 7.0 kB (good: vector format) |
+| `csm_kispi_16_4bba1014d8.jpg` | **750 × 750 px, 235 kB**, shown at **0 × 0** |
+| Lighthouse | "Improve image delivery": est. savings **93 KiB** · images have no explicit `width` and `height` |
 
-The three recommendations Lighthouse weights highest:
+Evidence: `a3-images.png`, `a3-image-size.png`, `a3-hidden-image.png`, `a3-image-size-console.png`, `a6-findings.png`.
 
-1. **Render-blocking requests** (est. 750 ms) — inline critical CSS, defer the rest.
-2. **Reduce unused JavaScript** (est. 145 KiB) — only load Leaflet where a map actually appears, and drop the old polyfills.
-3. **Reduce unused CSS** (est. 58 KiB) — split the 69 KiB bundle per page instead of one file for everything.
+**Explanation:** All photos are JPEG. **WebP or AVIF** would make them smaller at the same quality.
+The `kispi` photo sits inside a **closed accordion panel** (`style="display: none; height: 0px"`).
+In the Console, `offsetWidth` and `offsetHeight` are **0 × 0**, so no visitor sees it yet.
+The browser still **downloads 235 kB** on first load. The `data-lazerload` on its `<picture>` does not stop this.
+Missing `width` and `height` mean the browser does not know the image size in advance.
 
-Interestingly, real-user field data from the Chrome UX Report *passes* Core Web Vitals outright (LCP 1.5 s, INP 91 ms, CLS 0.01) — the lab test above is closer to a worst case than to what most visitors actually experience. It's also worth knowing what Lighthouse quietly misses: it never flags the 1.5 MB video, because the page as a whole still passes the "enormous network payloads" audit, and it can't see the oversized PNG at all, since that image only loads once you scroll past it.
+## A4. Third parties
 
-<img src="evidence/a6-lighthouse-scores.jpg" width="32%"> <img src="evidence/a6-lighthouse-insights.jpg" width="32%"> <img src="evidence/a6-field-data.jpg" width="32%">
+| Domain | What | Size |
+|---|---|---|
+| `www.deutsches-museum.de` | HTML, CSS, JS, fonts, images, video, xhr | all other requests |
+| `matomo.deutsches-museum.de` | `matomo.js` (analytics script) + `matomo.php` (ping, status `204`) | 22.3 kB + 0.3 kB |
 
-## A7 · Main document and three headers
+Result: **0 third-party requests** on first load. 39 requests, all on `deutsches-museum.de` or its own subdomain.
 
-`GET https://www.deutsches-museum.de/` returns **200 OK** over **HTTP/1.1**. The HTML is 21,564 bytes gzip-compressed, 95,296 bytes once decoded.
+Evidence: `a4-domains.png` (Domain column, all request types).
 
-1. **`content-encoding: gzip`** — the HTML is compressed before it's sent, shrinking it by **77%**. Switching to Brotli (`br`) would squeeze out a little more.
-2. **`strict-transport-security: max-age=63072000`** — for the next **2 years**, the browser will only ever reach this site over HTTPS, even if someone types `http://` by mistake. It's missing `includeSubDomains` and `preload`, though.
-3. **`x-cache: hit cached`**, with **`age: 1307`** — a server-side cache (likely Varnish) had this page sitting ready, 1,307 seconds old at the time. A few minutes later it read `age: 1477`, so it was still serving that same cached copy. That's exactly why the field TTFB is such a quick 0.4 s. The catch: the HTML itself sends **no `cache-control`, `etag` or `last-modified`**, so the browser has nothing cheap to check against on the next visit.
+**Explanation:** Fonts, the map library (`leaflet.js`, `OpenStreetMap2.js`) and analytics are all
+**self-hosted**. Privacy: visitor data stays with the museum and is not sent to Google or another company.
+Speed: `matomo.deutsches-museum.de` is the same site, but a **separate origin**, so it still costs
+one extra DNS lookup and connection, plus a ping on every page view.
 
-The versioned asset files handle this far better. `bundle.1793289553.css` carries **`cache-control: max-age=31536000`** — a full year — and that version number in the filename changes with every release, which is exactly how **cache busting** is supposed to work. It's the reason a repeat visit only costs 25.5 KiB. One more gap on the security side: there's no `content-security-policy` and no `x-frame-options` header either.
+## A5. Render-blocking and unused code
 
-<img src="evidence/a7-main-document-headers.jpg" width="40%"> <img src="evidence/a7-caching-headers-compare.png" width="55%">
+**Render-blocking:**
 
-## A8 · Conclusion
+| Resource | Where in the HTML | Blocks first paint? |
+|---|---|---|
+| `leaflet.1794932180.css` (3.7 kB) | line 27, `<head>` | Yes |
+| `bundle.1794932180.css` (71.1 kB) | line 28, `<head>` | Yes |
+| `leaflet.min.js`, `OpenStreetMap2.min.js`, `Form.min.js`, `bundle.js` | lines 428–431, end of the page | No |
 
-The fundamentals here are solid. The site sends **no third-party requests**, compresses its HTML, runs behind a server cache, and **caches its versioned files for a full year**. Real users pass Core Web Vitals comfortably. What's actually costing performance is **media weight** and **code nobody's trimming**. In order of impact:
+Source: Initiator column in `a4-domains.png` (`(index):27`, `(index):28`, `(index):428–431`).
 
-1. **The hero video (1.5 MB):** 77% of the first load is a 3-second decorative loop. A poster image on mobile and for anyone with `prefers-reduced-motion` set, `preload="none"`, and a smaller re-encode would all help.
-2. **Images (4.5 MB once you scroll):** serve WebP or AVIF at the size they're actually displayed, with `srcset`. The one PNG I tested dropped from 1,456 KiB to 80 KiB just by changing format. Add `width` and `height` while you're at it.
-3. **The render path (750 ms on Slow 4G):** inline critical CSS, split the CSS and JS bundles per page, only load Leaflet where there's a map, and add `defer` where it's missing.
-4. **Smaller wins:** WOFF2 with `font-display: swap`, HTTP/2, and a `cache-control` header plus a CSP on the HTML itself.
+**Unused code (Coverage, first load):**
 
-Fixing just the video would bring the first visit on mobile data down from 1,973 KiB to well under 500 KiB. Fixing the images would make scrolling the page several megabytes lighter on top of that.
+| File | Total | Unused |
+|---|---|---|
+| `bundle.1794932180.css` | 605 kB | **506 kB (83.7%)** |
+| `bundle.1794932180.js` | 531 kB | **341 kB (64.2%)** |
+| `leaflet.min.js` (map) | 181 kB | **151 kB (83.4%)** |
+| `Form.min.js` | 78 kB | 59 kB (75.2%) |
+| `matomo.js` | 67 kB | 40 kB (59.3%) |
+| **All CSS + JS** | **1.6 MB** | **1.2 MB unused (only 26% used)** |
+
+Evidence: `a5-coverage.png`. Coverage shows **unpacked** sizes. Example: `bundle.css` is 605 kB unpacked but 71.1 kB transferred.
+
+**Explanation:** The browser must download and read **both CSS files** before it paints anything,
+otherwise the page would flash without styles. `bundle.css` holds the CSS for the **whole website**,
+but the home page uses only about 16% of it. The scripts load at the end of the HTML, so they do not
+block the first paint, but they still cost download and parse time. The map library loads on the home
+page before anyone reaches a map.
+
+## A6. Top 3 Lighthouse findings
+
+Lighthouse, Mobile, Performance only, in Incognito. **6 runs: 67 / 68 / 69 / 70 / 70 / 83. Median: 69.5.**
+The screenshot shows a 70 run.
+
+| Metric (70 run) | Value | Rating |
+|---|---|---|
+| First Contentful Paint | 3.1 s | poor |
+| **Largest Contentful Paint** | **6.2 s** | poor |
+| Total Blocking Time | 150 ms | good |
+| Cumulative Layout Shift | 0.012 | good |
+| Speed Index | 3.4 s | needs work |
+
+| # | Finding | Lighthouse value | Matches my DevTools data |
+|---|---|---|---|
+| 1 | Reduce unused JavaScript | est. savings **146 KiB** | Coverage: `bundle.js` 64%, `leaflet.js` 83% unused (A5) |
+| 2 | Reduce unused CSS | est. savings **59 KiB** | Coverage: `bundle.css` 84% unused (A5) |
+| 3 | Avoid enormous network payloads | total **3,513 KiB** | Network: the video is about 2.1 MB (A2) |
+
+Evidence: `a6-lighthouse-score.png`, `a6-findings.png`.
+
+**Explanation:** Scores **vary** between runs, so I report the median. One run scored 83 because LCP
+was only 3.1 s, while every other run was **about 6 s**. LCP is the clearest problem: Google's target
+is under 2.5 s. A first run in a normal window with extensions scored only 46 (Total Blocking Time
+1,310 ms), which shows how much extensions slow down a test.
+
+## A7. Main document headers
+
+*To be added: Network → first row (document) → Headers tab, and `curl -I https://www.deutsches-museum.de/`.*
+
+| Header | Value | What it means |
+|---|---|---|
+| status / protocol | | |
+| content-type | | |
+| cache-control | | |
+| content-encoding | | |
+| strict-transport-security | | |
+| x-content-type-options | | |
+
+## A8. Conclusion
+
+The Deutsches Museum home page **works well on a fast connection** (Load 1.24 s) and handles privacy
+and caching well: **no third parties**, self-hosted analytics, and a repeat visit downloads only **31.6 kB**.
+On a **slow mobile connection** it is too heavy: Load takes **11.8 s**, and LCP is about **6 s** in Lighthouse.
+
+What I would fix first:
+
+1. **The hero video** (about 2.1 MB, 55% of the load). Show a poster image first, make the video smaller, or skip it on mobile and slow connections.
+2. **Unused CSS and JS** (1.2 MB unpacked). Split `bundle.css` and `bundle.js` per page, and load `leaflet.js` only when a map is visible.
+3. **Images.** Use WebP or AVIF, add `width` and `height`, and do not load images in closed panels until they open.
+
+## Screenshots
+
+![Network, no throttling: 42 requests, 4.1 MB, Load 1.24 s](screenshots/a1-normal.png)
+
+![Network, Slow 4G: Load 11.80 s, Finish 21.13 s](screenshots/a1-slow4g.png)
+
+![Repeat visit with cache: 31.6 kB transferred](screenshots/a1-repeat-visit.png)
+
+![Largest resources, sorted by Size](screenshots/a2-largest.png)
+
+![Img filter: 8 images, 958 kB, no WebP or AVIF](screenshots/a3-images.png)
+
+![csm_kispi preview: 750 × 750, 235 kB](screenshots/a3-image-size.png)
+
+![Elements: kispi image inside a display:none panel](screenshots/a3-hidden-image.png)
+
+![Console: 750 × 750 real size, offset size 0 × 0](screenshots/a3-image-size-console.png)
+
+![Domain column: all requests on deutsches-museum.de](screenshots/a4-domains.png)
+
+![Coverage sorted by unused bytes](screenshots/a5-coverage.png)
+
+![Lighthouse mobile: 70](screenshots/a6-lighthouse-score.png)
+
+![Lighthouse diagnostics](screenshots/a6-findings.png)
