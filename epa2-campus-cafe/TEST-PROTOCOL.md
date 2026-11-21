@@ -116,11 +116,16 @@ Test with <kbd>Tab</kbd>, <kbd>Shift</kbd>+<kbd>Tab</kbd> and <kbd>Enter</kbd> o
 
 | Step | Expected | Actual | Pass? |
 |---|---|---|---|
-| 6 | Tab reaches every form field in visual order | | |
-| 7 | Clicking a label moves focus into its field | | |
-| 8 | Submitting an empty form reports the missing required fields | | |
-| 9 | <kbd>Enter</kbd> in a text field submits the form | | |
-| 10 | The Send button is reachable and operable by keyboard | | |
+| 6 | Tab reaches every form field in visual order | Yes | Pass |
+| 7 | Clicking a label moves focus into its field | Yes | Pass |
+| 8 | Submitting an empty form reports the missing required fields | Yes, the browser asks for the required fields | Pass |
+| 9 | <kbd>Enter</kbd> in a text field submits the form | Yes | Pass |
+| 10 | The Send button is reachable and operable by keyboard | Yes | Pass |
+
+> Note on the environment: on macOS, <kbd>Tab</kbd> reaches only text fields until
+> **Keyboard navigation** is switched on in System Settings → Keyboard. With that setting
+> off, links and buttons are skipped. This is an operating-system setting, not a defect of
+> the page; the test above was run with it switched on.
 
 ### Screen-reader test
 
