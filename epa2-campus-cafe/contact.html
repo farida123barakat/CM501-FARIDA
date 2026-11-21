@@ -29,14 +29,42 @@
   </address>
   <p><a href="https://www.openstreetmap.org/search?query=Example%20Street%201%2C%2080000%20Munich">View Example Street 1 on OpenStreetMap</a></p>
 
-  <div class="h" style="font-size:24px">Newsletter &amp; reservations</div>
-  <form action="https://campus-cafe.example/subscribe" method="get">
-    <input type="text" name="name" placeholder="Name"><br><br>
-    <input type="text" name="email" placeholder="E-Mail"><br><br>
-    <input type="text" name="birthday" placeholder="Birthday"><br><br>
-    <input type="text" name="phone" placeholder="Phone"><br><br>
-    <textarea name="msg" placeholder="Message"></textarea><br><br>
-    <div class="btn2" onclick="this.closest('form').submit()">Send</div>
+  <h2 class="h h-section" id="form-heading">Newsletter &amp; reservations</h2>
+  <form action="https://campus-cafe.example/subscribe" method="post" aria-labelledby="form-heading">
+    <p class="form-intro">Fields marked <span aria-hidden="true">*</span><span class="visually-hidden">(required)</span> are required.</p>
+
+    <p class="field">
+      <label for="name">Name <abbr title="required" aria-hidden="true">*</abbr></label>
+      <input type="text" id="name" name="name" autocomplete="name" required>
+    </p>
+
+    <p class="field">
+      <label for="email">E-mail <abbr title="required" aria-hidden="true">*</abbr></label>
+      <input type="email" id="email" name="email" autocomplete="email" required
+             aria-describedby="email-hint">
+      <span class="hint" id="email-hint">We only use this to send the newsletter, for example name@example.com</span>
+    </p>
+
+    <p class="field">
+      <label for="birthday">Birthday</label>
+      <input type="date" id="birthday" name="birthday" autocomplete="bday"
+             aria-describedby="birthday-hint">
+      <span class="hint" id="birthday-hint">Optional — we send you a free coffee on your birthday.</span>
+    </p>
+
+    <p class="field">
+      <label for="phone">Phone</label>
+      <input type="tel" id="phone" name="phone" autocomplete="tel"
+             aria-describedby="phone-hint">
+      <span class="hint" id="phone-hint">Optional — only needed if you are booking a table.</span>
+    </p>
+
+    <p class="field">
+      <label for="msg">Message</label>
+      <textarea id="msg" name="msg" rows="5" autocomplete="off"></textarea>
+    </p>
+
+    <p><button type="submit" class="btn2">Send</button></p>
   </form>
   </main>
   <footer class="foot">
