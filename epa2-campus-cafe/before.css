@@ -1,16 +1,50 @@
 /* EPA 2 starter kit: styles of the Campus Café "before" version. Built badly ON PURPOSE. */
-* { outline: none !important; }
-body { margin: 0; background: #fff; font-family: 'Raleway', 'Helvetica Neue', Arial, sans-serif; font-weight: 200; font-size: 13px; color: #b3b3b3; }
+body { margin: 0; background: #fff; font-family: 'Raleway', 'Helvetica Neue', Arial, sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; color: #4a4a4a; } /* 8.9:1 on white */
 #wrap { width: 1100px; margin: 0 auto; }
 .top { background: #3b2a20; height: 90px; position: relative; }
-.logo { font-family: 'Lobster', 'Brush Script MT', cursive; font-size: 44px; color: #6b4a36; position: absolute; left: 20px; top: 16px; }
+.logo { font-family: 'Lobster', 'Brush Script MT', cursive; font-size: 44px; color: #e8c7a6; position: absolute; left: 20px; top: 8px; margin: 0; }
 .nav { position: absolute; right: 10px; top: 34px; }
-.nav div { display: inline-block; margin-left: 4px; padding: 2px 4px; font-size: 11px; color: #8a6d5a; cursor: pointer; }
-.nav div:hover { color: #fff; }
-.h { font-family: 'Lobster', 'Brush Script MT', cursive; color: #d9c6b4; font-size: 30px; margin: 22px 0 6px; font-weight: normal; }
+.nav a { display: inline-block; margin-left: 4px; padding: 6px 8px; font-size: 15px; color: #f1e6dc; } /* 11.1:1 on #3b2a20 */
+.nav a:hover { color: #fff; }
+.h { font-family: 'Lobster', 'Brush Script MT', cursive; color: #5a3a26; font-size: 30px; margin: 22px 0 6px; font-weight: normal; }
 .btn2 { display: inline-block; border: 1px dotted #ccc; color: #999; padding: 6px 18px; font-family: Georgia, serif; text-transform: uppercase; cursor: pointer; }
-table.layout td { vertical-align: top; padding: 4px 18px 4px 0; }
-.foot { background: #3b2a20; color: #6b4a36; padding: 20px; margin-top: 40px; font-size: 11px; }
-.foot svg { width: 14px; height: 14px; fill: #6b4a36; margin-right: 8px; }
-input, textarea { border: 1px solid #eee; padding: 6px; width: 300px; color: #bbb; font-family: inherit; }
-::placeholder { color: #ddd; }
+.foot { background: #3b2a20; color: #f1e6dc; padding: 20px; margin-top: 40px; font-size: 15px; } /* 11.1:1 */
+.foot a { color: #f1e6dc; }
+.foot svg { width: 16px; height: 16px; fill: currentColor; margin-right: 8px; vertical-align: middle; }
+input, textarea { border: 1px solid #767676; padding: 6px; width: 300px; color: #333; font-family: inherit; }
+::placeholder { color: #595959; }
+
+/* --- Visible keyboard focus (WCAG 2.4.7, 2.4.11, 1.4.11) --- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible { outline: 3px solid #b45309; outline-offset: 2px; border-radius: 2px; }
+.top a:focus-visible,
+.foot a:focus-visible { outline-color: #ffd9a8; }
+
+/* --- Skip link: hidden until it receives focus (WCAG 2.4.1) --- */
+.skip-link { position: absolute; left: -9999px; top: 0; background: #3b2a20; color: #fff; padding: 10px 16px; z-index: 10; }
+.skip-link:focus { left: 0; }
+
+/* --- Menu layout after removing the layout table --- */
+.menu-columns { display: flex; gap: 32px; align-items: flex-start; }
+.menu-column { flex: 1; }
+.h-section { font-size: 24px; }
+.menu-list { list-style: none; margin: 0; padding: 0; }
+.menu-list li { margin-bottom: 14px; }
+.item-name { font-weight: 700; color: #3f3f3f; }
+.price { color: #3f3f3f; white-space: nowrap; }
+.item-desc { display: block; font-style: italic; }
+.special-text { font-size: 18px; margin: 0 0 12px; }
+.special img, .photo { max-width: 100%; height: auto; display: block; }
+
+/* --- Footer social links --- */
+.social { list-style: none; margin: 0 0 12px; padding: 0; }
+.social li { display: inline-block; margin-right: 24px; }
+.social a { display: inline-flex; align-items: center; gap: 6px; }
+
+/* --- Respect a reduced-motion preference (WCAG 2.3.3) --- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
