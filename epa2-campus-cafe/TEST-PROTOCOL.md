@@ -23,9 +23,10 @@ Target: WCAG 2.2 AA.
 
 | Tool | menu.html before | menu.html after | contact.html before | contact.html after |
 |---|---|---|---|---|
-| W3C HTML validator (errors) |  |  |  |  |
-| Lighthouse accessibility |  |  |  |  |
-| WAVE errors / contrast errors / alerts |  |  |  |  |
+| W3C HTML validator (errors) | 14 (+1 warning) |  |  |  |
+| Lighthouse accessibility | 46 |  |  |  |
+| WAVE errors / contrast errors / alerts | 5 / 38 / 5 |  |  |  |
+| WAVE AIM score | 3.6 |  |  |  |
 
 Screenshots: `screenshots/`.
 
