@@ -7,7 +7,8 @@ body { margin: 0; background: #fff; font-family: 'Raleway', 'Helvetica Neue', Ar
 .nav a { display: inline-block; margin-left: 4px; padding: 6px 8px; font-size: 15px; color: #f1e6dc; } /* 11.1:1 on #3b2a20 */
 .nav a:hover { color: #fff; }
 .h { font-family: 'Lobster', 'Brush Script MT', cursive; color: #5a3a26; font-size: 30px; margin: 22px 0 6px; font-weight: normal; }
-.btn2 { display: inline-block; border: 1px dotted #ccc; color: #999; padding: 6px 18px; font-family: Georgia, serif; text-transform: uppercase; cursor: pointer; }
+button.btn2 { display: inline-block; border: 2px solid #5a3a26; background: #5a3a26; color: #fff; padding: 10px 22px; font-family: Georgia, serif; font-size: 16px; text-transform: uppercase; cursor: pointer; } /* 10.2:1 */
+button.btn2:hover { background: #3b2a20; border-color: #3b2a20; }
 .foot { background: #3b2a20; color: #f1e6dc; padding: 20px; margin-top: 40px; font-size: 15px; } /* 11.1:1 */
 .foot a { color: #f1e6dc; }
 .foot svg { width: 16px; height: 16px; fill: currentColor; margin-right: 8px; vertical-align: middle; }
@@ -48,3 +49,17 @@ select:focus-visible { outline: 3px solid #b45309; outline-offset: 2px; border-r
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
+
+/* --- Helper: available to screen readers, not shown on screen --- */
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* --- Contact page --- */
+.contact-details { font-style: normal; margin: 0 0 16px; }
+.contact-details a { color: #5a3a26; } /* 10.2:1 on white */
+.field { margin: 0 0 18px; }
+.field label { display: block; font-weight: 700; color: #3f3f3f; margin-bottom: 4px; }
+.field input, .field textarea { display: block; max-width: 100%; }
+.field textarea { width: 420px; }
+.hint { display: block; margin-top: 4px; font-size: 14px; color: #595959; } /* 7:1 on white */
+.form-intro { margin: 0 0 18px; }
+abbr[title] { text-decoration: none; color: #a4262c; } /* 5.6:1 on white */
