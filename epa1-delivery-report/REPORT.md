@@ -135,21 +135,37 @@ is under 2.5 s. A first run in a normal window with extensions scored only 46 (T
 
 ## A7. Main document headers
 
-*To be added: Network → first row (document) → Headers tab, and `curl -I https://www.deutsches-museum.de/`.*
+DevTools → Network → `www.deutsches-museum.de` (document) → Headers.
 
 | Header | Value | What it means |
 |---|---|---|
-| status / protocol | | |
-| content-type | | |
-| cache-control | | |
-| content-encoding | | |
-| strict-transport-security | | |
-| x-content-type-options | | |
+| Status Code | `200 OK` | The request worked |
+| Remote Address | `193.174.22.201:443` | The server's IP address; port 443 = HTTPS |
+| Content-Type | `text/html; charset=utf-8` | The file is an HTML page, in UTF-8 text |
+| Content-Encoding | `gzip` | The HTML is **compressed** on the way |
+| Content-Length | `21233` | Only **21.2 kB** is sent (compressed) |
+| Content-Language | `de-DE` | The page is in German |
+| Age / X-Cache | `1468` / `hit cached` | The server sent a **ready-made copy** from its cache, about 24 minutes old |
+| Vary | `Accept-Encoding` | Separate cached copies for compressed and uncompressed responses |
+| Strict-Transport-Security | `max-age=63072000` | The browser must always use **HTTPS**, for **2 years** |
+| X-Content-Type-Options | `nosniff` | The browser must trust the content type and not guess |
+| Cache-Control | **missing** | The page does not tell the browser how long to keep a copy |
+| Content-Security-Policy | **missing** | No list of allowed script sources |
+
+Evidence: `a7-headers.png`.
+
+**Explanation:** The HTML is small and fast: **gzip** brings it down to 21.2 kB, and the server answers
+from its own cache (`X-Cache: hit cached`). Security is partly good: **HSTS** forces HTTPS and `nosniff`
+stops file-type guessing. Two headers are missing. Without **Cache-Control**, each browser decides for
+itself how long to keep the page. Lighthouse also flags "Use efficient cache lifetimes" (est. 22 KiB).
+Without a **Content-Security-Policy**, there is no rule that blocks injected scripts.
+`Connection: keep-alive` suggests HTTP/1.1, because HTTP/2 does not use that header.
 
 ## A8. Conclusion
 
 The Deutsches Museum home page **works well on a fast connection** (Load 1.24 s) and handles privacy
-and caching well: **no third parties**, self-hosted analytics, and a repeat visit downloads only **31.6 kB**.
+and caching well: **no third parties**, self-hosted analytics, gzip and HSTS on the main document,
+and a repeat visit downloads only **31.6 kB**.
 On a **slow mobile connection** it is too heavy: Load takes **11.8 s**, and LCP is about **6 s** in Lighthouse.
 
 What I would fix first:
@@ -157,6 +173,7 @@ What I would fix first:
 1. **The hero video** (about 2.1 MB, 55% of the load). Show a poster image first, make the video smaller, or skip it on mobile and slow connections.
 2. **Unused CSS and JS** (1.2 MB unpacked). Split `bundle.css` and `bundle.js` per page, and load `leaflet.js` only when a map is visible.
 3. **Images.** Use WebP or AVIF, add `width` and `height`, and do not load images in closed panels until they open.
+4. **Headers.** Add `Cache-Control` and a `Content-Security-Policy` to the main document.
 
 ## Screenshots
 
@@ -183,3 +200,5 @@ What I would fix first:
 ![Lighthouse mobile: 70](screenshots/a6-lighthouse-score.png)
 
 ![Lighthouse diagnostics](screenshots/a6-findings.png)
+
+![Main document headers: 200 OK, gzip, HSTS, no Cache-Control](screenshots/a7-headers.png)
