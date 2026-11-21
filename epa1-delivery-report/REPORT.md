@@ -1,7 +1,7 @@
 # EPA 1 Part A · Delivery Report: Deutsches Museum
 
 Author: Farida Wael Barakat · Site analysed: https://www.deutsches-museum.de/ (home page)
-Tools: Chrome DevTools (Network, Elements, Console, Coverage, Lighthouse) in Chrome Incognito · Measured: 21 Nov 2026
+Tools: Chrome DevTools (Network, Elements, Console, Coverage, Lighthouse) in Chrome Incognito, `curl` · Measured: 21 Nov 2026
 
 DevTools shows sizes in **kB** (1 kB = 1,000 bytes). Lighthouse uses **KiB** (1 KiB = 1,024 bytes).
 
@@ -152,14 +152,24 @@ DevTools → Network → `www.deutsches-museum.de` (document) → Headers.
 | Cache-Control | **missing** | The page does not tell the browser how long to keep a copy |
 | Content-Security-Policy | **missing** | No list of allowed script sources |
 
-Evidence: `a7-headers.png`.
+**Same request with `curl -I https://www.deutsches-museum.de/`:**
+
+| What curl shows | Value | What it means |
+|---|---|---|
+| Protocol | **`HTTP/1.1 200 OK`** | The site uses the **older HTTP/1.1**, not HTTP/2 or HTTP/3 |
+| Content-Length | **`92519`** (no `Content-Encoding`) | curl did not ask for compression, so it got the **full 92.5 kB** HTML |
+| Cache-Control / CSP | missing | Confirms the DevTools result |
+
+Evidence: `a7-headers.png`, `a7-curl.png`.
 
 **Explanation:** The HTML is small and fast: **gzip** brings it down to 21.2 kB, and the server answers
 from its own cache (`X-Cache: hit cached`). Security is partly good: **HSTS** forces HTTPS and `nosniff`
 stops file-type guessing. Two headers are missing. Without **Cache-Control**, each browser decides for
 itself how long to keep the page. Lighthouse also flags "Use efficient cache lifetimes" (est. 22 KiB).
 Without a **Content-Security-Policy**, there is no rule that blocks injected scripts.
-`Connection: keep-alive` suggests HTTP/1.1, because HTTP/2 does not use that header.
+Comparing the two: **gzip shrinks the HTML from 92.5 kB to 21.2 kB (77% smaller)**.
+curl confirms **HTTP/1.1**. With HTTP/2 the browser could load many files over one connection at
+the same time, which would help a page with 42 requests.
 
 ## A8. Conclusion
 
@@ -173,7 +183,7 @@ What I would fix first:
 1. **The hero video** (about 2.1 MB, 55% of the load). Show a poster image first, make the video smaller, or skip it on mobile and slow connections.
 2. **Unused CSS and JS** (1.2 MB unpacked). Split `bundle.css` and `bundle.js` per page, and load `leaflet.js` only when a map is visible.
 3. **Images.** Use WebP or AVIF, add `width` and `height`, and do not load images in closed panels until they open.
-4. **Headers.** Add `Cache-Control` and a `Content-Security-Policy` to the main document.
+4. **Server and headers.** Switch from HTTP/1.1 to HTTP/2, and add `Cache-Control` and a `Content-Security-Policy` to the main document.
 
 ## Screenshots
 
@@ -202,3 +212,5 @@ What I would fix first:
 ![Lighthouse diagnostics](screenshots/a6-findings.png)
 
 ![Main document headers: 200 OK, gzip, HSTS, no Cache-Control](screenshots/a7-headers.png)
+
+![curl -I: HTTP/1.1 200 OK, 92,519 bytes uncompressed](screenshots/a7-curl.png)
