@@ -7,15 +7,18 @@
 <link rel="stylesheet" href="before.css">
 </head>
 <body>
-<!-- EPA 2 starter kit (CM-501). Built badly ON PURPOSE. Repair it: see epa2-assessment-brief. -->
+<a class="skip-link" href="#main">Skip to main content</a>
 <div id="wrap">
-  <div class="top">
-    <div class="logo">Campus Café</div>
-    <div class="nav">
-      <div onclick="location.href='menu.html'">MENU</div>
-      <div onclick="location.href='contact.html'">CONTACT</div>
-    </div>
-  </div>
+  <header class="top">
+    <p class="logo">Campus Café</p>
+    <nav class="nav" aria-label="Main">
+      <ul>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="contact.html" aria-current="page">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="main">
   <h1 class="h">Contact</h1>
   <img src="img/contact.png">
   <div>Example Street 1, 80000 Munich</div>
@@ -31,11 +34,24 @@
     <textarea name="msg" placeholder="Message"></textarea><br><br>
     <div class="btn2" onclick="this.closest('form').submit()">Send</div>
   </form>
-  <div class="foot">
-    <a href="#"><svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3c-2.8 0-4 1.7-4 4v2H8v4h2v8h4v-8h3l1-4h-4V8.5c0-.4.2-.5.5-.5z"/></svg></a>
-    <a href="#"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="#6b4a36" stroke-width="2"/></svg></a>
-    <br><br>© Campus Café
-  </div>
+  </main>
+  <footer class="foot">
+    <ul class="social">
+      <li>
+        <a href="#">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 8h3V4h-3c-2.8 0-4 1.7-4 4v2H8v4h2v8h4v-8h3l1-4h-4V8.5c0-.4.2-.5.5-.5z"/></svg>
+          <span>Campus Café on Facebook</span>
+        </a>
+      </li>
+      <li>
+        <a href="#">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          <span>Campus Café on Instagram</span>
+        </a>
+      </li>
+    </ul>
+    <p>© Campus Café</p>
+  </footer>
 </div>
 </body>
 </html>
