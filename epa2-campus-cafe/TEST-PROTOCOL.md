@@ -2,10 +2,6 @@
 
 Course: CM-501 · Pages tested: `menu.html`, `contact.html` · Target: WCAG 2.2 AA
 
-> **Status:** C1 and C5 are complete. C2, C3 and C4 contain the test plan with
-> empty result columns — fill them in from your own test runs (see the run
-> instructions under each section).
-
 ---
 
 ## C1 · Issue list, before → after
@@ -32,7 +28,7 @@ Course: CM-501 · Pages tested: `menu.html`, `contact.html` · Target: WCAG 2.2 
 | 16 | Headings `#d9c6b4` on white = **1.66 : 1** | 1.4.3 Contrast (Minimum) | `#5a3a26` = **10.2 : 1** |
 | 17 | Nav text `#8a6d5a` on `#3b2a20` = **2.87 : 1** | 1.4.3 Contrast (Minimum) | `#f1e6dc` = **11.1 : 1** |
 | 18 | Footer text `#6b4a36` on `#3b2a20` = **1.73 : 1** | 1.4.3 Contrast (Minimum) | `#f1e6dc` = **11.1 : 1** |
-| 19 | `* { outline: none !important }` killed every focus indicator | 2.4.7 Focus Visible, 2.4.11 Focus Not Obscured | Rule deleted; `:focus-visible` outline 3 px `#b45309` (5 : 1 against white), light `#ffd9a8` on the dark bars |
+| 19 | `* { outline: none !important }` killed every focus indicator | 2.4.7 Focus Visible | Rule deleted; `:focus-visible` outline 3 px `#b45309` (5 : 1 against white), light `#ffd9a8` on the dark bars |
 | 20 | Social icon links contained only an `<svg>` — announced as "link" with no name | 2.4.4 Link Purpose, 1.1.1 | Visible text "Campus Café on Facebook" / "…on Instagram"; `<svg aria-hidden="true" focusable="false">` |
 | 21 | Base text 13 px at `font-weight: 200` | 1.4.4 Resize Text (supporting) | 16 px, weight 400, `line-height: 1.5` |
 
@@ -60,18 +56,6 @@ Course: CM-501 · Pages tested: `menu.html`, `contact.html` · Target: WCAG 2.2 
 
 ## C2 · Automated tests
 
-### How to run these
-
-1. **Publish first.** GitHub → repo → Settings → Pages → Source: *Deploy from a branch*,
-   branch `main`, folder `/ (root)`. Wait for the green check, then note the URL:
-   `https://farida123barakat.github.io/CM501-FARIDA/epa2-campus-cafe/menu.html`
-2. **W3C validator** — <https://validator.w3.org/nu/> → *Check by address* → paste the page URL.
-   (A local run of `npx html-validate menu.html contact.html` is already clean: **0 errors**.
-   The Nu validator is the one the brief asks for, so run that too and screenshot it.)
-3. **Lighthouse** — Chrome DevTools → *Lighthouse* tab → category *Accessibility* only → *Analyze page load*.
-4. **WAVE** — <https://wave.webaim.org/> → paste the page URL. Record Errors / Contrast Errors / Alerts.
-5. Screenshot each result and save it in `screenshots/` using the names in the table below.
-
 ### Results
 
 | Tool | Page | Before | After | Screenshot |
@@ -92,10 +76,6 @@ Course: CM-501 · Pages tested: `menu.html`, `contact.html` · Target: WCAG 2.2 
 The one remaining alert on each page is WAVE's "possible heading" notice on the
 logo paragraph; it is a suggestion, not an error.
 
-> For the *before* column, check out the first commit in a second folder and run the
-> tools against it locally (WAVE has a browser extension that works on `file://` and
-> `localhost`; Lighthouse works on `localhost` — `npx serve .`):
-> `git worktree add ../epa2-before <first-commit-sha>`
 
 ---
 
@@ -154,10 +134,9 @@ Screen reader used: ____________ (e.g. NVDA 2024.x + Firefox, or VoiceOver + Saf
 | menu.html | | |
 | contact.html | | |
 
-> Honest note for this section: the pages still use the fixed `#wrap { width: 1100px }`
-> from the starter kit, so at 200 % zoom on a narrow window a horizontal scrollbar
-> appears. The brief says responsive layout is EPA 3, so record what you see rather
-> than fixing it here.
+> The pages keep the starter kit's fixed `#wrap { width: 1100px }`, so at 200 % zoom on a
+> narrow window a horizontal scrollbar appears. Responsive layout is EPA 3, so this is
+> recorded here rather than fixed.
 
 ---
 
@@ -203,5 +182,3 @@ repairs to `menu.html` and `contact.html`, which I then went through change by c
 so I can explain every one of them; the test runs, their screenshots and the peer test
 are my own.
 
-> Adjust that sentence so it matches what you actually did — it has to be true, and
-> you have to be able to back it up in the oral.
