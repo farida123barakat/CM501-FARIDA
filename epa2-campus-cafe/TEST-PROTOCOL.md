@@ -80,14 +80,17 @@ Course: CM-501 · Pages tested: `menu.html`, `contact.html` · Target: WCAG 2.2 
 | W3C Nu validator (errors) | contact.html | 2 (+1 warning) | | `screenshots/validator-contact-before-details.png`, `validator-contact-before-end.png` / after: |
 | Lighthouse accessibility score | menu.html | 46 | | `screenshots/lighthouse-menu-before.jpg` / after: |
 | Lighthouse accessibility score | contact.html | 47 | | `screenshots/lighthouse-contact-before.png` / after: |
-| WAVE errors | menu.html | 5 | | `screenshots/wave-menu-before.jpg` / after: |
-| WAVE contrast errors | menu.html | 38 | | (same screenshot) |
-| WAVE alerts | menu.html | 5 | | (same screenshot) |
-| WAVE AIM score | menu.html | 3.6 | | (same screenshot) |
-| WAVE errors | contact.html | 9 | | `screenshots/wave-contact-before.png` / after: |
-| WAVE contrast errors | contact.html | 3 | | (same screenshot) |
-| WAVE alerts | contact.html | 4 | | (same screenshot) |
-| WAVE AIM score | contact.html | 5.4 | | (same screenshot) |
+| WAVE errors | menu.html | 5 | 0 | `screenshots/wave-menu-before.jpg` / `wave-menu-after.jpg` |
+| WAVE contrast errors | menu.html | 38 | 0 | (same screenshot) |
+| WAVE alerts | menu.html | 5 | 1 | (same screenshot) |
+| WAVE AIM score | menu.html | 3.6 | 10 | (same screenshot) |
+| WAVE errors | contact.html | 9 | 0 | `screenshots/wave-contact-before.png` / `wave-contact-after.jpg` |
+| WAVE contrast errors | contact.html | 3 | 0 | (same screenshot) |
+| WAVE alerts | contact.html | 4 | 1 | (same screenshot) |
+| WAVE AIM score | contact.html | 5.4 | 10 | (same screenshot) |
+
+The one remaining alert on each page is WAVE's "possible heading" notice on the
+logo paragraph; it is a suggestion, not an error.
 
 > For the *before* column, check out the first commit in a second folder and run the
 > tools against it locally (WAVE has a browser extension that works on `file://` and
