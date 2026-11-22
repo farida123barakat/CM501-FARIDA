@@ -77,7 +77,7 @@ Course: CM-501 · Pages tested: `menu.html`, `contact.html` · Target: WCAG 2.2 
 | Tool | Page | Before | After | Screenshot |
 |---|---|---|---|---|
 | W3C Nu validator (errors) | menu.html | 14 (+1 warning) | 0 (no warnings) | `screenshots/validator-menu-before-summary.jpg`, `validator-menu-before-details.jpg` / `validator-menu-after.png` |
-| W3C Nu validator (errors) | contact.html | 2 (+1 warning) | | `screenshots/validator-contact-before-details.png`, `validator-contact-before-end.png` / after: |
+| W3C Nu validator (errors) | contact.html | 2 (+1 warning) | 0 (no warnings) | `screenshots/validator-contact-before-details.png`, `validator-contact-before-end.png` / `validator-contact-after.png` |
 | Lighthouse accessibility score | menu.html | 46 | | `screenshots/lighthouse-menu-before.jpg` / after: |
 | Lighthouse accessibility score | contact.html | 47 | | `screenshots/lighthouse-contact-before.png` / after: |
 | WAVE errors | menu.html | 5 | 0 | `screenshots/wave-menu-before.jpg` / `wave-menu-after.jpg` |
