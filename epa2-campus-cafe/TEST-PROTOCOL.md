@@ -114,25 +114,26 @@ Both keyboard walkthroughs were run in Chrome on macOS.
 
 ### Screen-reader test
 
-Screen reader used: ____________ (e.g. NVDA 2024.x + Firefox, or VoiceOver + Safari)
+Tool used: **Chrome DevTools accessibility tree** (the data a screen reader turns into
+speech), inspected on the live pages. A VoiceOver run is still outstanding.
 
 | Task | What was announced | Result |
 |---|---|---|
-| Open menu.html and list the landmarks (NVDA: <kbd>D</kbd>) | | |
-| List the headings (<kbd>H</kbd>) — is the order h1 → h2 logical? | | |
-| Read the "Today's special" section | | |
-| Enter the Coffee list — is it announced as "list, 4 items"? | | |
-| Tab to the footer links — is the link name meaningful? | | |
-| On contact.html, tab through the form — is each field's label read out? | | |
-| Is the e-mail field announced as required, with its hint? | | |
-| Is the Send control announced as a button? | | |
+| Open menu.html and list the landmarks (NVDA: <kbd>D</kbd>) | banner, navigation "Main", main, contentinfo | Pass |
+| List the headings (<kbd>H</kbd>) — is the order h1 → h2 logical? | h1 Menu, then h2 Today's special, Coffee, Tea & more, Food | Pass |
+| Read the "Today's special" section | Read as real text, not as an image | Pass |
+| Enter the Coffee list — is it announced as "list, 4 items"? | Exposed as a list with four items | Pass |
+| Tab to the footer links — is the link name meaningful? | "Campus Café on Facebook" / "…on Instagram" | Pass |
+| On contact.html, tab through the form — is each field's label read out? | Every field carries its label: Name, E-mail, Birthday, Phone, Message | Pass |
+| Is the e-mail field announced as required, with its hint? | Marked `required`, hint tied to it with `aria-describedby` | Pass |
+| Is the Send control announced as a button? | Exposed as button "Send" | Pass |
 
 ### Zoom 200 %
 
 | Page | Browser zoom 200 % — any loss of content or function? | Notes |
 |---|---|---|
-| menu.html | | |
-| contact.html | | |
+| menu.html | No text is lost and nothing overlaps; all content stays readable. Because of the fixed 1100 px wrapper the page needs horizontal scrolling at this width. | Reflow (1.4.10) is not met; the brief places responsive layout in EPA 3. |
+| contact.html | Same: labels, hints and fields stay readable and in order, with horizontal scrolling needed. | As above. |
 
 > The pages keep the starter kit's fixed `#wrap { width: 1100px }`, so at 200 % zoom on a
 > narrow window a horizontal scrollbar appears. Responsive layout is EPA 3, so this is
@@ -143,6 +144,8 @@ Screen reader used: ____________ (e.g. NVDA 2024.x + Firefox, or VoiceOver + Saf
 ## C4 · Peer test (Session 4)
 
 Peer tester: ____________ Date: ____________
+
+**Not yet carried out** — to be completed in the Session 4 peer-testing slot.
 
 The blank sheet your tester fills in is `peer-test/peer-test-sheet.md`.
 Transfer their findings here afterwards.
