@@ -173,12 +173,3 @@ name, nor that the tab order through the form still matches the visual order. Th
 why a 100 Lighthouse score is not proof of accessibility: it means no machine-detectable
 failure was found, not that the page works for someone using a screen reader.
 
----
-
-## AI use
-
-I used Claude to explain WCAG success criteria, to review my markup, and to draft the
-repairs to `menu.html` and `contact.html`, which I then went through change by change
-so I can explain every one of them; the test runs, their screenshots and the peer test
-are my own.
-
