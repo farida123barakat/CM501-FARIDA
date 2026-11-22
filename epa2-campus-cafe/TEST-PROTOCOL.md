@@ -112,21 +112,23 @@ Test with <kbd>Tab</kbd>, <kbd>Shift</kbd>+<kbd>Tab</kbd> and <kbd>Enter</kbd> o
 
 Both keyboard walkthroughs were run in Chrome on macOS.
 
-### Screen-reader test
+### Screen-reader test (accessibility tree)
 
-Tool used: **Chrome DevTools accessibility tree** (the data a screen reader turns into
-speech), inspected on the live pages. A VoiceOver run is still outstanding.
+Tool used: **Chrome DevTools accessibility tree**, inspected on the live pages.
+The tree is the information a screen reader reads out. It shows each element's
+role, name and state. No screen reader was run for this table; a VoiceOver run
+is still outstanding.
 
-| Task | What was announced | Result |
+| Task | What the accessibility tree shows | Result |
 |---|---|---|
-| Open menu.html and list the landmarks (NVDA: <kbd>D</kbd>) | banner, navigation "Main", main, contentinfo | Pass |
-| List the headings (<kbd>H</kbd>) — is the order h1 → h2 logical? | h1 Menu, then h2 Today's special, Coffee, Tea & more, Food | Pass |
-| Read the "Today's special" section | Read as real text, not as an image | Pass |
-| Enter the Coffee list — is it announced as "list, 4 items"? | Exposed as a list with four items | Pass |
-| Tab to the footer links — is the link name meaningful? | "Campus Café on Facebook" / "…on Instagram" | Pass |
-| On contact.html, tab through the form — is each field's label read out? | Every field carries its label: Name, E-mail, Birthday, Phone, Message | Pass |
-| Is the e-mail field announced as required, with its hint? | Marked `required`, hint tied to it with `aria-describedby` | Pass |
-| Is the Send control announced as a button? | Exposed as button "Send" | Pass |
+| menu.html: which landmarks are there? | banner, navigation "Main", main, contentinfo | Pass |
+| Is the heading order h1 → h2 logical? | h1 Menu, then h2 Today's special, Coffee, Tea & more, Food | Pass |
+| Is the "Today's special" section real text? | Static text with name, price and time; the image is ignored (`alt=""`) | Pass |
+| Is the Coffee section a list with 4 items? | Role list with four list items | Pass |
+| Do the footer links have meaningful names? | Link "Campus Café on Facebook" / link "Campus Café on Instagram" | Pass |
+| contact.html: does each form field have a label? | Every field has its label as its name: Name, E-mail, Birthday, Phone, Message | Pass |
+| Is the e-mail field required, with its hint? | State required; description = the hint text (via `aria-describedby`) | Pass |
+| Is the Send control a button? | Role button, name "Send" | Pass |
 
 ### Zoom 200 %
 
