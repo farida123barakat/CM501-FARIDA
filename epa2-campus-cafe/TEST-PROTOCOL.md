@@ -109,11 +109,11 @@ Test with <kbd>Tab</kbd>, <kbd>Shift</kbd>+<kbd>Tab</kbd> and <kbd>Enter</kbd> o
 
 | Step | Expected | Actual | Pass? |
 |---|---|---|---|
-| 1 | First <kbd>Tab</kbd> reveals "Skip to main content" | | |
-| 2 | <kbd>Enter</kbd> on the skip link moves focus past the header | | |
-| 3 | Tab order: skip link → Menu → Contact → Facebook → Instagram | | |
-| 4 | Focus outline clearly visible on every stop, on the dark bars too | | |
-| 5 | Nothing focusable is skipped or trapped | | |
+| 1 | First <kbd>Tab</kbd> reveals "Skip to main content" | Yes, it appears at the top left | Pass |
+| 2 | <kbd>Enter</kbd> on the skip link moves focus past the header | Yes, the address gains `#main` and the next Tab lands in the footer, so the navigation is skipped | Pass |
+| 3 | Tab order: skip link → Menu → Contact → Facebook → Instagram | Yes, in that order | Pass |
+| 4 | Focus outline clearly visible on every stop, on the dark bars too | Yes, light outline on the brown header and footer, orange on white | Pass |
+| 5 | Nothing focusable is skipped or trapped | Yes | Pass |
 
 **contact.html**
 
@@ -129,6 +129,8 @@ Test with <kbd>Tab</kbd>, <kbd>Shift</kbd>+<kbd>Tab</kbd> and <kbd>Enter</kbd> o
 > **Keyboard navigation** is switched on in System Settings → Keyboard. With that setting
 > off, links and buttons are skipped. This is an operating-system setting, not a defect of
 > the page; the test above was run with it switched on.
+
+Both keyboard walkthroughs were run in Chrome on macOS.
 
 ### Screen-reader test
 
