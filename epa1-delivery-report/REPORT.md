@@ -186,11 +186,26 @@ the same time, which would help a page with 42 requests.
 Sizes and unused shares come from Coverage (A5). All of them are **self-hosted**: nothing is fetched
 from Google or another company (A4).
 
-**Where the scripts sit.** All four site scripts are at the **end of the page**, on lines 428–431,
-not in the `<head>`. This matters. A normal `<script>` in the head **stops the browser reading the
-HTML**: the browser has to wait, because the script could change the page. By putting the scripts
-at the end, the HTML is already read before any script runs, so the **first paint is not blocked**
-(A5). Only the two CSS files block it.
+**Where the scripts sit, and how they load.** A normal `<script>` **stops the browser reading the
+HTML**: the browser has to wait, because the script could change the page. `defer` and `async` let
+it carry on reading. `type="module"` behaves like `defer`.
+
+| Script | Where | How it loads | Effect |
+|---|---|---|---|
+| `matomo.js` | `<head>` | `async` | downloads next to the HTML, runs as soon as it arrives |
+| `ie11Polyfill` (written in the page) | `<head>` | — | runs straight away; only does something in Internet Explorer 11 |
+| `vendors-axios…js` | `<head>` | **nothing** | **stops the browser reading the HTML** until it is downloaded and run |
+| `leaflet.min.js` | end of `<body>` | nothing | the HTML is already read, so nothing is held up |
+| `OpenStreetMap2.min.js` | end of `<body>` | `type="module"` | like `defer` |
+| `Form.min.js` | end of `<body>` | `defer` | runs after the HTML is read, in order |
+| `bundle.js` | end of `<body>` | nothing | the HTML is already read |
+
+Evidence: `a8-scripts.png` (Elements, search `<script`, 9 matches).
+
+The four big scripts sit at the **end of the page**, so they do not hold up the first paint (A5).
+But one script in the `<head>`, `vendors-axios…js`, has **no `defer` and no `async`**, so it does
+block. Adding `defer` to it would cost nothing and would let the browser keep reading. The two CSS
+files block as well.
 
 **How much of it is needed.** About **two thirds of `bundle.js` and four fifths of `leaflet.min.js`
 are never used** on the home page. The map library loads even though there is **no map on the home
