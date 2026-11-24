@@ -171,7 +171,37 @@ Comparing the two: **gzip shrinks the HTML from 92.5 kB to 21.2 kB (77% smaller)
 curl confirms **HTTP/1.1**. With HTTP/2 the browser could load many files over one connection at
 the same time, which would help a page with 42 requests.
 
-## A8. Conclusion
+## A8. JavaScript on the page
+
+**Which scripts the page loads:**
+
+| File | What it is for | Unused on first load |
+|---|---|---|
+| `bundle.js` (531 kB) | the site's own code, for example the menus that open and close | **64%** |
+| `leaflet.min.js` (181 kB) | the map library | **83%** |
+| `OpenStreetMap2.min.js` | the map data for Leaflet | — |
+| `Form.min.js` (78 kB) | the forms | 75% |
+| `matomo.js` (67 kB) | the visitor statistics | 59% |
+
+Sizes and unused shares come from Coverage (A5). All of them are **self-hosted**: nothing is fetched
+from Google or another company (A4).
+
+**Where the scripts sit.** All four site scripts are at the **end of the page**, on lines 428–431,
+not in the `<head>`. This matters. A normal `<script>` in the head **stops the browser reading the
+HTML**: the browser has to wait, because the script could change the page. By putting the scripts
+at the end, the HTML is already read before any script runs, so the **first paint is not blocked**
+(A5). Only the two CSS files block it.
+
+**How much of it is needed.** About **two thirds of `bundle.js` and four fifths of `leaflet.min.js`
+are never used** on the home page. The map library loads even though there is **no map on the home
+page**. Lighthouse makes the same point: "Reduce unused JavaScript", about **146 KiB** (A6).
+
+**Scripts and security.** The main document sends **no `Content-Security-Policy`** (A7). A CSP is a
+header that says which scripts the browser may run, for example only scripts from the site itself.
+The site already keeps every script on its own server, so such a rule would cost it nothing and
+would stop an injected script from running.
+
+## A9. Conclusion
 
 The Deutsches Museum home page **works well on a fast connection** (Load 1.24 s) and handles privacy
 and caching well: **no third parties**, self-hosted analytics, gzip and HSTS on the main document,
