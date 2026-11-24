@@ -211,6 +211,26 @@ files block as well.
 are never used** on the home page. The map library loads even though there is **no map on the home
 page**. Lighthouse makes the same point: "Reduce unused JavaScript", about **146 KiB** (A6).
 
+**The page without JavaScript.** DevTools → Settings → Preferences → Debugger →
+**Disable JavaScript**, then reload.
+
+| | Result |
+|---|---|
+| Text, headings, images, the hero | **still there** |
+| Page structure: `skip-nav`, `header`, `main`, `footer` | **still there**, with content inside |
+| The **menu** behind the ☰ button | **does not open** |
+| The **+ HEUTE** panel | **does not open** and stays empty |
+
+Evidence: `a8-no-javascript.png`.
+
+**Explanation:** The server sends a **ready-made HTML page**, so everything you read on the home
+page survives without JavaScript. Two things do not. The ☰ button does not open the menu, so the
+links behind it cannot be reached. The **+ HEUTE** panel fetches its content afterwards — its
+`data-ajaxuri` attribute holds the address it would load from — so with JavaScript off there is
+nothing to show. The menu is the main way around the site, so a visitor who blocks JavaScript can
+read this page but cannot move to another one. A plain list of links in the HTML would work for
+everyone, and JavaScript could then make it fold away on small screens.
+
 **Scripts and security.** The main document sends **no `Content-Security-Policy`** (A7). A CSP is a
 header that says which scripts the browser may run, for example only scripts from the site itself.
 The site already keeps every script on its own server, so such a rule would cost it nothing and
