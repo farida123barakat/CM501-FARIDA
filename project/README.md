@@ -20,6 +20,18 @@ Student project for **CM-501 Frontend Web Development** (MUDT, Winter 2026). Not
 | Community | `community.html` | placeholder, built later |
 | My Egypt | `my-egypt.html` | placeholder, built later |
 
+## Planned features
+
+| Section | Features |
+| --- | --- |
+| **Discover** | Find Your Egypt quiz, interactive map, destination pages, Walk Through Time timeline, Golden Hour Finder, weather and crowd chart, events calendar, Ramadan guide, Watch & Discover films, bucket list |
+| **Plan** | Smart Trip Builder, budget calculator, itinerary PDF, currency converter, packing checklist, suggested routes, preparation guide |
+| **Experience** | Memory Hunt, postcards, memory album, Memory Passport, print partners, Hieroglyphics Explorer, Taste Egypt by region, recipes, Speak a little Egyptian, culture and etiquette, Egypt Through the Senses |
+| **Travel Smart** | Emergency numbers and embassies, Cairo Metro guide, walking routes, solo women guide, accessibility guide, fair price guide |
+| **Community and My Egypt** | Ask a Local, traveller stories, My Egypt, travel passport stamps, visitor accounts |
+| **Admin** | Moderation, price editor, event manager, featured destinations, recipe review, bucket list manager, film manager, print partners and print queue |
+| **Site-wide** | Search, proverb of the day, accessibility controls, mobile layout, security, contact form, newsletter, privacy, credits and sources pages |
+
 ## Design
 
 Discover Egypt is for first-time visitors who feel a little unsure about travelling to Egypt, and it should feel like a calm travel magazine at golden hour: warm photos, an elegant serif (Fraunces) for headlines and a readable sans-serif (Inter) for text.
