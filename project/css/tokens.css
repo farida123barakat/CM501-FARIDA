@@ -1,0 +1,82 @@
+/* =========================================================
+   Discover Egypt · Design tokens
+   Every colour, size and space on the site comes from here.
+   Defined once, used everywhere with var(--name).
+   ========================================================= */
+
+:root {
+  /* The site follows the visitor's system setting: light or dark.
+     light-dark(A, B) picks A in light mode and B in dark mode. */
+  color-scheme: light dark;
+
+  /* ---------- Colour ----------
+     Contrast ratios (WCAG 2.2) are listed in styleguide.html. */
+  --color-text: light-dark(#2b2d33, #f1e8d8);          /* body text */
+  --color-text-muted: light-dark(#5b5d63, #c3c6cc);    /* captions, meta */
+  --color-heading: light-dark(#0f1b2d, #faf6ee);       /* h1–h3 */
+  --color-bg: light-dark(#faf6ee, #0f1b2d);            /* page: ivory / midnight */
+  --color-surface: light-dark(#ffffff, #1b2b44);       /* cards */
+  --color-surface-alt: light-dark(#f1e8d8, #0a1220);   /* alternate sections */
+  --color-brand: light-dark(#0f1b2d, #e4c486);         /* primary button fill */
+  --color-brand-hover: light-dark(#1b2b44, #f0dcb0);
+  --color-on-brand: light-dark(#faf6ee, #0f1b2d);      /* text on brand */
+  --color-accent: #e4c486;                             /* gold: one main action on photos */
+  --color-accent-hover: #f0dcb0;
+  --color-on-accent: #0f1b2d;
+  --color-accent-ink: light-dark(#7d5f27, #e4c486);    /* gold as text (eyebrows) */
+  --color-link: light-dark(#2f6f6b, #7cc4bd);          /* Nile turquoise: links and focus */
+  --color-border: light-dark(#8c7350, #8a97ab);        /* form borders, ≥ 3:1 */
+  --color-error: light-dark(#a3321f, #f28b78);
+  --color-on-photo: #faf6ee;                           /* text on the hero photo */
+  --color-scrim: rgb(10 18 32 / 0.85);                 /* dark layer under text on photos */
+  --color-scrim-clear: rgb(10 18 32 / 0.15);
+
+  /* ---------- Typography ---------- */
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Type scale: 5 steps. Headings are fluid with clamp(min, preferred, max).
+     The rem part keeps zoom working; the vw part grows with the screen. */
+  --font-size-small: 0.875rem;                                  /* 14 px */
+  --font-size-body: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);    /* 16 → 18 px */
+  --font-size-h3: clamp(1.375rem, 1.2rem + 0.75vw, 1.75rem);    /* 22 → 28 px */
+  --font-size-h2: clamp(1.875rem, 1.4rem + 2vw, 3rem);          /* 30 → 48 px */
+  --font-size-h1: clamp(2.5rem, 1.5rem + 4.5vw, 5rem);          /* 40 → 80 px */
+
+  --line-height-tight: 1.1;   /* headings */
+  --line-height-snug: 1.4;    /* large quotes */
+  --line-height-body: 1.6;    /* paragraphs */
+  --tracking-eyebrow: 0.2em;  /* letter spacing of the small label above headings */
+  --measure: 65ch;            /* readable line length ≈ 65 characters */
+  --measure-lead: 35ch;       /* short hero subline */
+  --measure-heading: 15ch;    /* big headline: 2–3 short lines */
+
+  /* ---------- Spacing: 7 steps ----------
+     Only these values are used for margin, padding and gap. */
+  --space-1: 0.25rem;   /*  4 px */
+  --space-2: 0.5rem;    /*  8 px */
+  --space-3: 1rem;      /* 16 px */
+  --space-4: 1.5rem;    /* 24 px */
+  --space-5: 2.5rem;    /* 40 px */
+  --space-6: 4rem;      /* 64 px */
+  --space-7: 6rem;      /* 96 px */
+
+  /* ---------- Shape ---------- */
+  --radius-small: 0.75rem;    /* inputs */
+  --radius-card: 1.25rem;     /* cards */
+  --radius-pill: 50rem;       /* buttons, nav links */
+  --border-thin: 0.0625rem;   /* 1 px */
+  --border-thick: 0.125rem;   /* 2 px: inputs, outline buttons */
+  --focus-ring: 0.1875rem;    /* 3 px focus outline */
+  --target-min: 2.75rem;      /* 44 px: smallest click / tap target */
+
+  /* ---------- Layout ---------- */
+  --container-max: 80rem;     /* 1280 px: widest content */
+  --field-max: 30rem;         /* widest form input */
+  --shadow-card: 0 0.0625rem 0 rgb(15 27 45 / 0.04), 0 1.25rem 2.5rem -1.75rem rgb(15 27 45 / 0.35);
+  --duration: 250ms;          /* hover and colour changes */
+}
+
+/* Theme override classes: used on the style guide to show both themes. */
+.theme-light { color-scheme: light; }
+.theme-dark { color-scheme: dark; }

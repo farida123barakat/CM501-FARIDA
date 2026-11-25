@@ -1,0 +1,556 @@
+/* =========================================================
+   Discover Egypt · Styles
+   Mobile first: the base rules are for small screens.
+   Two breakpoints add layout for bigger screens:
+     40rem (640 px)  – room for 2 cards side by side
+     64rem (1024 px) – room for 3 cards per row and a 2-column intro
+   Media queries cannot use var(), so the values are written here
+   and documented in styleguide.html.
+   ========================================================= */
+
+/* ---------- 1. Fonts (self-hosted, no Google request) ---------- */
+@font-face {
+  font-family: "Fraunces";
+  src: url("../fonts/fraunces-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url("../fonts/fraunces-latin-wght-italic.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/inter-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- 2. Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  /* Page layout with Grid: header, main, footer. Main takes the free space. */
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: minmax(0, 1fr); /* lets columns shrink below the image width */
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: var(--line-height-tight);
+  color: var(--color-heading);
+  text-wrap: balance;
+}
+h1 { font-size: var(--font-size-h1); }
+h2 { font-size: var(--font-size-h2); }
+h3 { font-size: var(--font-size-h3); }
+
+p {
+  margin: 0;
+  max-width: var(--measure);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--color-link);
+  text-underline-offset: var(--space-1);
+}
+
+/* One visible focus style for every interactive element */
+:focus-visible,
+.is-focus {
+  outline: var(--focus-ring) solid var(--color-link);
+  outline-offset: var(--focus-ring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* The .is-hover and .is-focus classes only exist so the style guide
+   can show a state without a mouse. The site itself never uses them. */
+
+/* ---------- 3. Layout helpers ---------- */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+
+.section {
+  padding-block: var(--space-6);
+}
+.section--alt {
+  background: var(--color-surface-alt);
+}
+
+.section__head {
+  display: grid;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-3);
+  top: calc(-1 * var(--space-7));
+  z-index: 10;
+  padding: var(--space-3);
+  border-radius: var(--radius-small);
+  background: var(--color-brand);
+  color: var(--color-on-brand);
+}
+.skip-link:focus {
+  top: var(--space-3);
+}
+
+/* ---------- 4. Header and navigation ---------- */
+.site-header {
+  border-bottom: var(--border-thin) solid var(--color-border);
+  background: var(--color-bg);
+}
+.site-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  padding-block: var(--space-3);
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target-min);
+  font-family: var(--font-display);
+  font-size: var(--font-size-h3);
+  font-weight: 600;
+  color: var(--color-heading);
+  text-decoration: none;
+}
+
+.nav__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target-min);
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-pill);
+  color: var(--color-text);
+  font-size: var(--font-size-small);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color var(--duration) ease;
+}
+.nav__link:hover,
+.nav__link.is-hover {
+  background: var(--color-surface-alt);
+}
+.nav__link[aria-current="page"] {
+  background: var(--color-brand);
+  color: var(--color-on-brand);
+}
+
+/* ---------- 5. Hero ---------- */
+/* Photo and text sit in the same grid cell, on top of each other. */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 85vh;
+  background: var(--color-scrim);
+}
+.hero > * {
+  grid-area: 1 / 1;
+}
+.hero__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hero__content {
+  display: grid;
+  align-content: end;
+  padding-block: var(--space-7) var(--space-6);
+  /* Solid dark layer behind all text, clear only in the empty top padding. */
+  background: linear-gradient(
+    to top,
+    var(--color-scrim) calc(100% - var(--space-7)),
+    var(--color-scrim-clear)
+  );
+  color: var(--color-on-photo);
+}
+.hero__inner {
+  display: grid;
+  gap: var(--space-4);
+}
+.hero__content h1 {
+  color: var(--color-on-photo);
+  max-width: var(--measure-heading);
+}
+.hero__content .eyebrow {
+  color: var(--color-accent);
+}
+.hero__lead {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--font-size-h3);
+  max-width: var(--measure-lead);
+}
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* ---------- 6. Grids of cards ---------- */
+.card-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dish-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* ---------- 7. Intro ---------- */
+.intro {
+  display: grid;
+  gap: var(--space-4);
+}
+.intro__quote {
+  font-family: var(--font-display);
+  font-size: var(--font-size-h3);
+  line-height: var(--line-height-snug);
+  color: var(--color-heading);
+}
+
+/* ---------- 8. Footer ---------- */
+.site-footer {
+  padding-block: var(--space-6);
+  background: var(--color-surface-alt);
+  font-size: var(--font-size-small);
+}
+.site-footer__grid {
+  display: grid;
+  gap: var(--space-5);
+}
+.site-footer h2 {
+  font-size: var(--font-size-h3);
+  margin-bottom: var(--space-3);
+}
+.site-footer ul {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.site-footer__bottom {
+  margin-top: var(--space-5);
+  color: var(--color-text-muted);
+}
+
+/* =========================================================
+   COMPONENTS
+   ========================================================= */
+
+/* ---------- Eyebrow: small label above a heading ---------- */
+.eyebrow {
+  font-size: var(--font-size-small);
+  font-weight: 600;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-accent-ink);
+}
+
+.lead {
+  color: var(--color-text-muted);
+}
+
+/* ---------- Button ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--target-min);
+  padding: var(--space-2) var(--space-4);
+  border: var(--border-thick) solid transparent;
+  border-radius: var(--radius-pill);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--duration) ease,
+    border-color var(--duration) ease;
+}
+
+/* Primary: main action on light backgrounds */
+.btn--primary {
+  background: var(--color-brand);
+  color: var(--color-on-brand);
+}
+.btn--primary:hover,
+.btn--primary.is-hover {
+  background: var(--color-brand-hover);
+}
+
+/* Gold: the one main action on a photo */
+.btn--gold {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+.btn--gold:hover,
+.btn--gold.is-hover {
+  background: var(--color-accent-hover);
+}
+
+/* Outline: second action on a photo */
+.btn--outline {
+  border-color: var(--color-on-photo);
+  background: transparent;
+  color: var(--color-on-photo);
+}
+.btn--outline:hover,
+.btn--outline.is-hover {
+  background: var(--color-on-photo);
+  color: var(--color-on-accent);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- Place card ---------- */
+.card {
+  position: relative;
+  display: grid;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--duration) ease;
+}
+.card__photo {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.card__body {
+  display: grid;
+  align-content: start;
+  gap: var(--space-2);
+  padding: var(--space-4);
+}
+.card__meta {
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+}
+.card__link {
+  color: inherit;
+  text-decoration: none;
+}
+/* The link covers the whole card, so the whole card is clickable. */
+.card__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.card:hover,
+.card.is-hover {
+  transform: translateY(calc(-1 * var(--space-1)));
+}
+.card:hover .card__link,
+.card.is-hover .card__link {
+  text-decoration: underline;
+}
+.card:focus-within,
+.card.is-focus {
+  outline: var(--focus-ring) solid var(--color-link);
+  outline-offset: var(--focus-ring);
+}
+.card__link:focus-visible {
+  outline: none; /* the whole card shows the ring instead */
+}
+
+/* ---------- Dish card (uses a container query) ---------- */
+/* Each list item is a container. The card looks at ITS OWN width,
+   not the screen: narrow = photo on top, wide = photo on the left. */
+.dish-grid > li {
+  container-type: inline-size;
+}
+.dish {
+  display: grid;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+.dish__photo {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+.dish__body {
+  display: grid;
+  align-content: start;
+  gap: var(--space-2);
+  padding: var(--space-4);
+}
+.dish__arabic {
+  font-size: var(--font-size-h3);
+  color: var(--color-accent-ink);
+}
+@container (min-width: 30rem) {
+  .dish {
+    grid-template-columns: 2fr 3fr;
+  }
+  .dish__photo {
+    aspect-ratio: auto;
+  }
+}
+
+/* ---------- Form field ---------- */
+.field {
+  display: grid;
+  width: 100%;
+  gap: var(--space-2);
+  max-width: var(--field-max);
+}
+.field__label {
+  font-weight: 600;
+  color: var(--color-heading);
+}
+.field__hint {
+  font-size: var(--font-size-small);
+  color: var(--color-text-muted);
+}
+.field__input {
+  min-height: var(--target-min);
+  padding: var(--space-2) var(--space-3);
+  border: var(--border-thick) solid var(--color-border);
+  border-radius: var(--radius-small);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+.field__input:hover,
+.field__input.is-hover {
+  border-color: var(--color-text);
+}
+.field__input:focus-visible,
+.field__input.is-focus {
+  border-color: var(--color-link);
+  outline-offset: 0;
+}
+.field__input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.field__input[aria-invalid="true"] {
+  border-color: var(--color-error);
+}
+.field__error {
+  font-size: var(--font-size-small);
+  font-weight: 600;
+  color: var(--color-error);
+}
+
+/* =========================================================
+   BREAKPOINT 1 · 40rem (640 px)
+   Cards are at least ~18rem wide, so two now fit side by side.
+   ========================================================= */
+@media (min-width: 40rem) {
+  .container {
+    padding-inline: var(--space-5);
+  }
+  .card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .site-footer__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =========================================================
+   BREAKPOINT 2 · 64rem (1024 px)
+   Laptop width: 3 cards per row, intro in 2 columns,
+   dishes in 2 columns, more space between sections.
+   ========================================================= */
+@media (min-width: 64rem) {
+  .section {
+    padding-block: var(--space-7);
+  }
+  .card-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .dish-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .intro {
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-6);
+  }
+  .site-footer__grid {
+    grid-template-columns: 2fr 1fr 2fr;
+  }
+}

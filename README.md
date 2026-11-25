@@ -9,7 +9,7 @@ One folder per assessment, plus my lab work.
 | `epa1-profile-site/` | EPA 1 Part B · My profile page: [live site](https://farida123barakat.github.io/CM501-FARIDA/epa1-profile-site/) |
 | `epa2-campus-cafe/` | EPA 2 · Repair the Campus Café: [menu](https://farida123barakat.github.io/CM501-FARIDA/epa2-campus-cafe/menu.html), [contact](https://farida123barakat.github.io/CM501-FARIDA/epa2-campus-cafe/contact.html), [test protocol](epa2-campus-cafe/TEST-PROTOCOL.md) |
 | `labs/` | Lab work |
-| `project/` | My own website, built up from EPA 2 to EPA 6 |
+| `project/` | My own website, Discover Egypt, built up from EPA 2 to EPA 6: [home page](https://farida123barakat.github.io/CM501-FARIDA/project/index.html) |
 
 ## EPA 1 Part B · Profile site
 
